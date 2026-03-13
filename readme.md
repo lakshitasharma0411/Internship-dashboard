@@ -1,5 +1,8 @@
 \# Internship Dashboard – Task 1
 
+**Note**: The original dataset contains ~1.6M rows (~1.7 GB).
+For deployment on Streamlit Cloud, a smaller sample of the dataset is used.
+The filtering logic and dashboard implementation remain identical to the full dataset.
 
 
 -----Project Overview
@@ -95,4 +98,5 @@ Run the dashboard:
 
 
 streamlit run app.py
+
 
