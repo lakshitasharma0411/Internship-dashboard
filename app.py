@@ -209,5 +209,35 @@ st.write("Rows after sidebar filters:", len(filtered_df))
 
 st.dataframe(filtered_df.head(50))
 
+# TIME CONDITION (3PM–5PM IST)
+# -----------------------------
+ist = pytz.timezone("Asia/Kolkata")
+current_time = datetime.datetime.now(ist)
+
+if 15 <= current_time.hour < 17:
+
+    grouped = (
+        filtered.groupby("Preference")
+        .size()
+        .reset_index(name="Count")
+        .sort_values(by="Count", ascending=False)
+    )
+
+    if not grouped.empty:
+        fig = px.bar(
+            grouped,
+            x="Preference",
+            y="Count",
+            text="Count",
+            title="Preference vs Intern Work Type"
+        )
+        st.plotly_chart(fig)
+    else:
+        st.warning("No data available after applying all filters.")
+
+else:
+    st.warning("Chart visible only between 3 PM and 5 PM IST.")
+
 # Local URL: http://localhost:8501
+
 #  Network URL: http://192.168.0.21:8501
