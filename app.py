@@ -214,7 +214,7 @@ st.dataframe(filtered_df.head(50))
 # TIME CONDITION (3PM–5PM IST)
 # -----------------------------
 ist = pytz.timezone("Asia/Kolkata")
-current_time = datetime.datetime.now(ist)
+current_time = datetime.now(ist)
 
 if 15 <= current_time.hour < 17:
 
@@ -243,6 +243,7 @@ else:
 # Local URL: http://localhost:8501
 
 #  Network URL: http://192.168.0.21:8501
+
 
 
 
