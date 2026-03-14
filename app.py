@@ -231,12 +231,14 @@ if 15 <= current_time.hour < 17:
     else:
         st.warning("No data available after applying all filters.")
 
-else:
-    st.warning("Chart visible only between 3 PM and 5 PM IST.")
+    else:
+        st.warning("Chart visible only between 3 PM and 5 PM IST.")
 
 # Local URL: http://localhost:8501
 
 #  Network URL: http://192.168.0.21:8501
+
+
 
 elif task == "Task 2 – Company Size vs Company Name":
 
@@ -291,8 +293,8 @@ elif task == "Task 2 – Company Size vs Company Name":
         else:
             st.warning("No data after applying filters.")
 
-    else:
-        st.warning("Chart visible only between 3 PM and 5 PM IST.")
+        else:
+            st.warning("Chart visible only between 3 PM and 5 PM IST.")
 
 elif task == "Task 3 – Top 10 Companies":
     st.info("Task 3 coming soon")
