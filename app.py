@@ -18,9 +18,7 @@ task = st.sidebar.selectbox(
 
 if task == "Task 1 – Preference vs Work Type":
     # your existing code
-
-    # task 6 code
-st.title("Global Job Preference Dashboard")
+    st.title("Global Job Preference Dashboard")
 
 # -----------------------------
 # LOAD DATA
