@@ -4,6 +4,22 @@ import plotly.express as px
 import pytz
 from datetime import datetime
 
+task = st.sidebar.selectbox(
+    "Select Task",
+    [
+        "Task 1 – Preference vs Work Type",
+        "Task 2 – Company Size vs Company Name",
+        "Task 3 – Top 10 Companies",
+        "Task 4 – Qualification Map",
+        "Task 5 – India vs Germany Comparison",
+        "Task 6 – Work Type Salary Distribution"
+    ]
+)
+
+if task == "Task 1 – Preference vs Work Type":
+    # your existing code
+
+    # task 6 code
 st.title("Global Job Preference Dashboard")
 
 # -----------------------------
@@ -14,26 +30,6 @@ df = pd.read_csv("dataset_sample.csv")
 df.columns = df.columns.str.strip()
 
 st.write("Total rows loaded:", len(df))
-
-# -----------------------------
-# SIDEBAR FILTERS
-# -----------------------------
-st.sidebar.header("Filters")
-
-work_type_filter = st.sidebar.selectbox(
-    "Select Work Type",
-    df["Work Type"].dropna().unique()
-)
-
-country_filter = st.sidebar.selectbox(
-    "Select Country",
-    ["All"] + list(df["Country"].dropna().unique())
-)
-
-job_filter = st.sidebar.selectbox(
-    "Select Job Title",
-    ["All"] + list(df["Job Title"].dropna().unique())
-)
 
 # -----------------------------
 # DATA CLEANING
@@ -243,6 +239,74 @@ else:
 # Local URL: http://localhost:8501
 
 #  Network URL: http://192.168.0.21:8501
+
+elif task == "Task 2 – Company Size vs Company Name":
+
+    st.title("Task 2: Company Size vs Company Name (Scatter Plot)")
+
+    filtered = df.copy()
+
+    filtered = filtered[filtered["Company Size"] < 50000]
+    filtered = filtered[filtered["Job Title"] == "Mechanical Engineer"]
+    filtered = filtered[filtered["Experience Num"] > 5]
+    filtered = filtered[filtered["Salary Min"] > 50]
+
+    filtered = filtered[
+        filtered["Work Type"].isin(["Full-Time", "Part-Time"])
+    ]
+
+    filtered = filtered[filtered["Preference"] == "Male"]
+    filtered = filtered[filtered["Job Portal"] == "Idealist"]
+
+    asia_countries = [
+        "China","Japan","South Korea","Saudi Arabia","UAE",
+        "Thailand","Malaysia","Singapore","Pakistan",
+        "Bangladesh","Nepal","Sri Lanka","Philippines","Vietnam"
+    ]
+
+    filtered = filtered[filtered["Country"].isin(asia_countries)]
+    filtered = filtered[~filtered["Country"].str.startswith("I", na=False)]
+
+    def has_two_vowels(name):
+        vowels = "aeiouAEIOU"
+        count = sum(1 for char in str(name) if char in vowels)
+        return count >= 2
+
+    filtered = filtered[filtered["Company"].apply(has_two_vowels)]
+
+    ist = pytz.timezone("Asia/Kolkata")
+    current_time = datetime.now(ist)
+
+    if 15 <= current_time.hour < 17:
+
+        if not filtered.empty:
+
+            fig = px.scatter(
+                filtered,
+                x="Company Size",
+                y="Company",
+                title="Company Size vs Company Name"
+            )
+
+            st.plotly_chart(fig)
+
+        else:
+            st.warning("No data after applying filters.")
+
+    else:
+        st.warning("Chart visible only between 3 PM and 5 PM IST.")
+
+elif task == "Task 3 – Top 10 Companies":
+    st.info("Task 3 coming soon")
+
+elif task == "Task 4 – Qualification Map":
+    st.info("Task 4 coming soon")
+
+elif task == "Task 5 – India vs Germany Comparison":
+    st.info("Task 3 coming soon")
+
+elif task == "Task 6 – Work Type Salary Distribution":
+    st.info("Task 3 coming soon")
 
 
 
