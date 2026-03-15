@@ -61,8 +61,7 @@ df["Job Posting Date"] = pd.to_datetime(df["Job Posting Date"], errors="coerce")
 # TIME
 # ---------------------------------------------------
 
-ist = pytz.timezone("Asia/Kolkata")
-current_time = datetime.now(ist)
+
 
 # ===================================================
 # TASK 1 – BAR CHART
