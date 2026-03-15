@@ -91,10 +91,7 @@ if task == "Task 1 – Preference vs Work Type":
     filtered = filtered[
         filtered["Job Posting Date"].dt.month % 2 == 1
     ]
-
-    
-
-        fig = px.bar(
+    fig = px.bar(
             grouped,
             x="Preference",
             y="Count",
