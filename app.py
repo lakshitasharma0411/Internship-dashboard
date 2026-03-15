@@ -117,7 +117,6 @@ if task == "Task 1 – Preference vs Work Type":
         y="Count",
         color="Work Type"
     )
-
     st.plotly_chart(fig2)
 
 # -----------------------------
@@ -133,8 +132,7 @@ fig3 = px.bar(
       y="Count",
      color="Country"
 )
-
-    st.plotly_chart(fig3)
+st.plotly_chart(fig3)
 
 # -----------------------------
 # TOP JOB TITLES
@@ -149,8 +147,7 @@ fig4 = px.bar(
     y="Count",
     color="Job Title"
 )
-
-    st.plotly_chart(fig4)
+st.plotly_chart(fig4)
 
 # -----------------------------
 # PREFERENCE PIE CHART
@@ -159,14 +156,12 @@ fig4 = px.bar(
     st.subheader("Preference Distribution")
 pref_counts = filtered_df["Preference"].value_counts().reset_index()
 pref_counts.columns = ["Preference","Count"]
-
-    fig5 = px.pie(
-        pref_counts,
-        names="Preference",
-        values="Count"
-    )
-
-    st.plotly_chart(fig5)
+fig5 = px.pie(
+    pref_counts,
+    names="Preference",
+    values="Count"
+)
+st.plotly_chart(fig5)
 
 st.subheader("Filtered Task Data")
 
