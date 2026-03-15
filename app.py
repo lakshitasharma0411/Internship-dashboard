@@ -98,8 +98,7 @@ if task == "Task 1 – Preference vs Work Type":
             text="Count",
             title="Preference vs Intern Work Type"
         )
-
-        st.plotly_chart(fig)
+    st.plotly_chart(fig)
 
   
 
