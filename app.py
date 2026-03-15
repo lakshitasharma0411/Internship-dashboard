@@ -104,8 +104,83 @@ if task == "Task 1 – Preference vs Work Type":
         title="Preference vs Intern Work Type"
     )
     st.plotly_chart(fig)
+    # -----------------------------
+# WORK TYPE DISTRIBUTION
+# ----------------------------
+    st.subheader("Work Type Distribution")
+    work_counts = df["Work Type"].value_counts().reset_index()
+    work_counts.columns = ["Work Type","Count"]
 
-  
+    fig2 = px.bar(
+        work_counts,
+        x="Work Type",
+        y="Count",
+        color="Work Type"
+    )
+
+    st.plotly_chart(fig2)
+
+# -----------------------------
+# TOP COUNTRIES
+# -----------------------------
+
+    st.subheader("Top 10 Countries")
+country_counts = filtered_df["Country"].value_counts().head(10).reset_index()
+country_counts.columns = ["Country","Count"]
+    fig3 = px.bar(
+        country_counts,
+        x="Country",
+        y="Count",
+        color="Country"
+    )
+
+    st.plotly_chart(fig3)
+
+# -----------------------------
+# TOP JOB TITLES
+# -----------------------------
+
+    st.subheader("Top 10 Job Titles")
+job_counts = filtered_df["Job Title"].value_counts().head(10).reset_index()
+job_counts.columns = ["Job Title","Count"]
+
+    fig4 = px.bar(
+        job_counts,
+        x="Job Title",
+        y="Count",
+        color="Job Title"
+    )
+
+    st.plotly_chart(fig4)
+
+# -----------------------------
+# PREFERENCE PIE CHART
+# -----------------------------
+
+    st.subheader("Preference Distribution")
+pref_counts = filtered_df["Preference"].value_counts().reset_index()
+pref_counts.columns = ["Preference","Count"]
+
+    fig5 = px.pie(
+        pref_counts,
+        names="Preference",
+        values="Count"
+    )
+
+    st.plotly_chart(fig5)
+
+st.subheader("Filtered Task Data")
+
+st.write("Rows after task filters:", len(filtered))
+
+st.dataframe(filtered[["Preference","Work Type","Country","Job Title"]])
+
+st.subheader("Interactive Filter Data")
+
+st.write("Rows after sidebar filters:", len(filtered_df))
+
+st.dataframe(filtered_df.head(50))
+
 
 # ===================================================
 # TASK 2 – SCATTER PLOT
