@@ -119,7 +119,7 @@ if task == "Task 1 – Preference vs Work Type":
     )
     st.plotly_chart(fig2)
     st.subheader("Top 10 Countries")
-    country_counts = filtered_df["Country"].value_counts().head(10).reset_index()
+    country_counts = filtered["Country"].value_counts().head(10).reset_index()
     country_counts.columns = ["Country","Count"]
     fig3 = px.bar(
         country_counts,
@@ -129,7 +129,7 @@ if task == "Task 1 – Preference vs Work Type":
     )
     st.plotly_chart(fig3)
     st.subheader("Top 10 Job Titles")
-    job_counts = filtered_df["Job Title"].value_counts().head(10).reset_index()
+    job_counts = filtered["Job Title"].value_counts().head(10).reset_index()
     job_counts.columns = ["Job Title","Count"]
     fig4 = px.bar(
         job_counts,
@@ -161,7 +161,7 @@ if task == "Task 1 – Preference vs Work Type":
 
     st.subheader("Interactive Filter Data")
 
-    st.write("Rows after sidebar filters:", len(filtered_df))
+    st.write("Rows after sidebar filters:", len(filtered))
 
     st.dataframe(filtered.head(50))
 
