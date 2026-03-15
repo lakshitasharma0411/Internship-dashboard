@@ -96,7 +96,6 @@ if task == "Task 1 – Preference vs Work Type":
     .size()
     .reset_index(name="Count")
 )
-)
     fig = px.bar(
             x="Preference",
             y="Count",
