@@ -92,14 +92,7 @@ if task == "Task 1 – Preference vs Work Type":
         filtered["Job Posting Date"].dt.month % 2 == 1
     ]
 
-    if 15 <= current_time.hour < 17:
-
-        grouped = (
-            filtered.groupby("Preference")
-            .size()
-            .reset_index(name="Count")
-            .sort_values(by="Count", ascending=False)
-        )
+    
 
         fig = px.bar(
             grouped,
@@ -111,8 +104,7 @@ if task == "Task 1 – Preference vs Work Type":
 
         st.plotly_chart(fig)
 
-    else:
-        st.warning("Chart visible only between 3 PM and 5 PM IST")
+  
 
 # ===================================================
 # TASK 2 – SCATTER PLOT
