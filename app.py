@@ -97,11 +97,12 @@ if task == "Task 1 – Preference vs Work Type":
     .reset_index(name="Count")
     )
     fig = px.bar(
-            x="Preference",
-            y="Count",
-            text="Count",
-            title="Preference vs Intern Work Type"
-        )
+        grouped,
+        x="Preference",
+        y="Count",
+        text="Count",
+        title="Preference vs Intern Work Type"
+    )
     st.plotly_chart(fig)
 
   
