@@ -123,7 +123,7 @@ if task == "Task 1 – Preference vs Work Type":
 # TOP COUNTRIES
 # -----------------------------
 
-    st.subheader("Top 10 Countries")
+st.subheader("Top 10 Countries")
 country_counts = filtered_df["Country"].value_counts().head(10).reset_index()
 country_counts.columns = ["Country","Count"]
 fig3 = px.bar(
@@ -138,7 +138,7 @@ st.plotly_chart(fig3)
 # TOP JOB TITLES
 # -----------------------------
 
-    st.subheader("Top 10 Job Titles")
+st.subheader("Top 10 Job Titles")
 job_counts = filtered_df["Job Title"].value_counts().head(10).reset_index()
 job_counts.columns = ["Job Title","Count"]
 fig4 = px.bar(
@@ -153,7 +153,7 @@ st.plotly_chart(fig4)
 # PREFERENCE PIE CHART
 # -----------------------------
 
-    st.subheader("Preference Distribution")
+st.subheader("Preference Distribution")
 pref_counts = filtered_df["Preference"].value_counts().reset_index()
 pref_counts.columns = ["Preference","Count"]
 fig5 = px.pie(
