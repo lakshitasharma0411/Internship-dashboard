@@ -209,17 +209,13 @@ elif task == "Task 2 – Company Size vs Company Name":
         return sum(c in vowels for c in str(name)) >= 2
 
     filtered = filtered[filtered["Company"].apply(vowel_check)]
-
-    
-
-        fig = px.scatter(
-            filtered,
-            x="Company Size",
-            y="Company",
-            title="Company Size vs Company Name"
-        )
-
-        st.plotly_chart(fig)
+    fig = px.scatter(
+        filtered,
+        x="Company Size",
+        y="Company",
+        title="Company Size vs Company Name"
+    )
+    st.plotly_chart(fig)
 
    
 
