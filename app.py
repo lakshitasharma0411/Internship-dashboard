@@ -210,7 +210,7 @@ elif task == "Task 2 – Company Size vs Company Name":
 
     filtered = filtered[filtered["Company"].apply(vowel_check)]
 
-    if 15 <= current_time.hour < 17:
+    
 
         fig = px.scatter(
             filtered,
@@ -221,8 +221,7 @@ elif task == "Task 2 – Company Size vs Company Name":
 
         st.plotly_chart(fig)
 
-    else:
-        st.warning("Chart visible only between 3 PM and 5 PM IST")
+   
 
 # ===================================================
 # TASK 3 – TREEMAP
