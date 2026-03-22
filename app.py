@@ -145,6 +145,17 @@ if task == "Task 1 – Preference vs Work Type":
         text="Count"
     )
     st.plotly_chart(fig)
+
+    pref_counts = df["Preference"].value_counts().reset_index()
+    pref_counts.columns = ["Preference", "Count"]
+
+    fig = px.pie(
+        pref_counts,
+        names="Preference",
+        values="Count",
+        title="Preference Distribution"
+    )
+    st.plotly_chart(fig)
     
     job_counts = df["Job Title"].value_counts().head(10).reset_index()
     job_counts.columns = ["Job Title", "Count"]
@@ -193,6 +204,24 @@ elif task == "Task 2 – Company Size vs Company Name":
     else:
         st.warning("No data available")
 
+    top_companies = (
+    filtered.groupby("Company")["Company Size"]
+        .mean()
+        .sort_values(ascending=False)
+        .head(10)
+        .reset_index()
+    )
+    fig = px.bar(
+        top_companies,
+        x="Company",
+        y="Company Size",
+        title="Top Companies by Size",
+        text="Company Size"
+    )
+
+    st.plotly_chart(fig)
+        
+
 # ===================================================
 # TASK 3
 # ===================================================
@@ -208,6 +237,13 @@ elif task == "Task 3 – Top 10 Companies":
         st.plotly_chart(fig)
     else:
         st.warning("No data available")
+        
+    fig = px.pie(
+         filtered,
+         names="Company",
+         title="Company Share Distribution"
+    )
+     st.plotly_chart(fig)
 
 # ===================================================
 # TASK 4
@@ -233,6 +269,16 @@ elif task == "Task 4 – Qualification Map":
         st.plotly_chart(fig)
     else:
         st.warning("No data available")
+        
+    country_counts = filtered["Country"].value_counts().reset_index()
+    country_counts.columns = ["Country", "Count"]
+    fig = px.bar(
+        country_counts,
+        x="Country",
+        y="Count",
+        title="Jobs by Country"
+    )
+    st.plotly_chart(fig)
 
 # ===================================================
 # TASK 5
@@ -253,6 +299,13 @@ elif task == "Task 5 – India vs Germany Comparison":
         st.plotly_chart(fig)
     else:
         st.warning("No data available")
+        
+    fig = px.pie(
+        filtered,
+        names="Country",
+        title="India vs Germany Share"
+    )
+    st.plotly_chart(fig)
 
 # ===================================================
 # TASK 6
@@ -271,3 +324,12 @@ elif task == "Task 6 – Work Type Salary Distribution":
         st.plotly_chart(fig)
     else:
         st.warning("No data available")
+
+    fig = px.histogram(
+        filtered,
+        x="Salary Min",
+        nbins=30,
+        title="Salary Distribution"
+    )
+
+    st.plotly_chart(fig)
