@@ -243,7 +243,7 @@ elif task == "Task 3 – Top 10 Companies":
          names="Company",
          title="Company Share Distribution"
     )
-     st.plotly_chart(fig)
+    st.plotly_chart(fig)
 
 # ===================================================
 # TASK 4
