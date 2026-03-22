@@ -134,6 +134,46 @@ if task == "Task 1 – Preference vs Work Type":
         title="Work Type Distribution"
     )
     st.plotly_chart(fig)
+    
+    country_counts = df["Country"].value_counts().head(10).reset_index()
+    country_counts.columns = ["Country", "Count"]
+    fig = px.bar(
+        country_counts,
+        x="Country",
+        y="Count",
+        title="Top 10 Countries",
+        text="Count"
+    )
+    st.plotly_chart(fig)
+    
+    job_counts = df["Job Title"].value_counts().head(10).reset_index()
+    job_counts.columns = ["Job Title", "Count"]
+
+    fig = px.bar(
+        job_counts,
+        x="Job Title",
+        y="Count",
+        title="Top Job Titles",
+        text="Count"
+    )
+    st.plotly_chart(fig)
+    fig = px.histogram(
+        df,
+        x="Salary Min",
+        nbins=30,
+        title="Salary Distribution"
+    )
+    st.plotly_chart(fig)
+    pref_counts = df["Preference"].value_counts().reset_index()
+    pref_counts.columns = ["Preference", "Count"]
+
+    fig = px.pie(
+        pref_counts,
+        names="Preference",
+        values="Count",
+        title="Preference Distribution"
+    )
+    st.plotly_chart(fig)
 
 # ===================================================
 # TASK 2
