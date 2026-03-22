@@ -25,7 +25,7 @@ def load_data():
     except:
         # ✅ Fallback to Google Drive
         file_id = "1gvHGeckF5hqT3LFpvGLT3HaB7penAxUA"
-        url = f"https://drive.google.com/uc?id={1gvHGeckF5hqT3LFpvGLT3HaB7penAxUA}"
+        url = f"https://drive.google.com/uc?id=1gvHGeckF5hqT3LFpvGLT3HaB7penAxUA"
         output = "data.csv"
 
         if not os.path.exists(output):
