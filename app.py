@@ -124,6 +124,17 @@ if task == "Task 1 – Preference vs Work Type":
     else:
         st.warning("No data available")
 
+    pref_counts = df["Work Type"].value_counts().reset_index()
+    pref_counts.columns = ["Work Type", "Count"]
+
+    fig = px.pie(
+        pref_counts,
+        names="Work Type",
+        values="Count",
+        title="Work Type Distribution"
+    )
+    st.plotly_chart(fig)
+
 # ===================================================
 # TASK 2
 # ===================================================
