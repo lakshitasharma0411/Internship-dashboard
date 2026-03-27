@@ -6,7 +6,7 @@ import os
 from datetime import datetime
 
 # ---------------------------------------------------
-# PAGE CONFIG
+# PAGE CONFIGURE
 # ---------------------------------------------------
 st.set_page_config(page_title="Global Internship Dashboard", layout="wide")
 st.title("🌍 Global Internship Dashboard")
