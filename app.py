@@ -7,7 +7,7 @@ import gdown
 import os
 
 # ---------------------------------------------------
-# PAGE CONFIG
+# PAGE CONFIGure
 # ---------------------------------------------------
 st.set_page_config(page_title="Global Internship Dashboard", layout="wide")
 st.title("🌍 Global Internship Dashboard")
@@ -127,64 +127,66 @@ if task == "Task 1 – Preference vs Work Type":
     pref_counts = df["Work Type"].value_counts().reset_index()
     pref_counts.columns = ["Work Type", "Count"]
 
-    fig = px.pie(
+    fig2 = px.pie(
         pref_counts,
         names="Work Type",
         values="Count",
         title="Work Type Distribution"
     )
-    st.plotly_chart(fig)
+    st.plotly_chart(fig2 ,key="pref_chart")
     
     country_counts = df["Country"].value_counts().head(10).reset_index()
     country_counts.columns = ["Country", "Count"]
-    fig = px.bar(
+    fig3 = px.bar(
         country_counts,
         x="Country",
         y="Count",
         title="Top 10 Countries",
         text="Count"
     )
-    st.plotly_chart(fig)
+    st.plotly_chart(fig3 ,key="country_counts")
 
     pref_counts = df["Preference"].value_counts().reset_index()
     pref_counts.columns = ["Preference", "Count"]
 
-    fig = px.pie(
+    fig4 = px.pie(
         pref_counts,
         names="Preference",
         values="Count",
         title="Preference Distribution"
     )
-    st.plotly_chart(fig)
+    st.plotly_chart(fig4 ,key="distrubution")
     
     job_counts = df["Job Title"].value_counts().head(10).reset_index()
     job_counts.columns = ["Job Title", "Count"]
 
-    fig = px.bar(
+    fig5 = px.bar(
         job_counts,
         x="Job Title",
         y="Count",
         title="Top Job Titles",
         text="Count"
     )
-    st.plotly_chart(fig)
-    fig = px.histogram(
+    st.plotly_chart(fig5 ,key="jobs")
+    
+    fig6 = px.histogram(
         df,
         x="Salary Min",
         nbins=30,
         title="Salary Distribution"
     )
-    st.plotly_chart(fig)
+    st.plotly_chart(fig6 ,key="salary_distribution")
+    
     pref_counts = df["Preference"].value_counts().reset_index()
     pref_counts.columns = ["Preference", "Count"]
 
-    fig = px.pie(
+    fig7 = px.pie(
         pref_counts,
         names="Preference",
         values="Count",
         title="Preference Distribution"
     )
-    st.plotly_chart(fig)
+    st.plotly_chart(fig7 ,key="preference_distribution")
 
 # ===================================================
 # TASK 2
