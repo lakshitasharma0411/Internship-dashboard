@@ -85,6 +85,9 @@ st.sidebar.write("Total Rows:", len(df))
 # ---------------------------------------------------
 # SIDEBAR
 # ---------------------------------------------------
+# SIDEBAR
+st.sidebar.title("Navigation")
+
 task = st.sidebar.selectbox(
     "Select Task",
     [
@@ -97,11 +100,14 @@ task = st.sidebar.selectbox(
     ]
 )
 
+st.sidebar.markdown("---")
+st.sidebar.header("Filters")
+
 # ---------------------------------------------------
 # TIME
 # ---------------------------------------------------
-ist = pytz.timezone("Asia/Kolkata")
-current_time = datetime.now(ist)
+
+current_time = datetime.now()
 
 # ===================================================
 # TASK 1
