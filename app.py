@@ -213,7 +213,7 @@ elif task == "Task 2 – Company Size vs Company Name":
         .head(10)
         .reset_index()
     )
-    fig = px.bar(
+    fig9 = px.bar(
         top_companies,
         x="Company",
         y="Company Size",
@@ -221,31 +221,32 @@ elif task == "Task 2 – Company Size vs Company Name":
         text="Company Size"
     )
 
-    st.plotly_chart(fig)
+    st.plotly_chart(fig9, key="Top_Companies")
         
 
 # ===================================================
 # TASK 3
 # ===================================================
 elif task == "Task 3 – Top 10 Companies":
-
     filtered = df.copy()
-
     if len(filtered) > 0:
         top = filtered["Company"].value_counts().head(10).reset_index()
         top.columns = ["Company", "Count"]
 
-        fig = px.treemap(top, path=["Company"], values="Count")
-        st.plotly_chart(fig)
+        fig1 = px.treemap(top, path=["Company"], values="Count")
+        st.plotly_chart(fig1, key="treemap_task3")
+
+        # ✅ FIXED PIE
+        fig2 = px.pie(
+            top,
+            names="Company",
+            values="Count",
+            title="Top 10 Company Share"
+        )
+        st.plotly_chart(fig2, key="pie_task3")
+
     else:
         st.warning("No data available")
-        
-    fig = px.pie(
-         filtered,
-         names="Company",
-         title="Company Share Distribution"
-    )
-    st.plotly_chart(fig)
 
 # ===================================================
 # TASK 4
@@ -255,11 +256,11 @@ elif task == "Task 4 – Qualification Map":
     filtered = df.copy()
 
     filtered = filtered[filtered["Salary Min"] > 20]
-
+    filtered = filtered.dropna(subset=["latitude", "longitude"])
     st.write("Filtered Rows:", len(filtered))
 
     if len(filtered) > 0:
-        fig = px.scatter_mapbox(
+        fig11 = px.scatter_mapbox(
             filtered,
             lat="latitude",
             lon="longitude",
@@ -267,20 +268,20 @@ elif task == "Task 4 – Qualification Map":
             zoom=2
         )
 
-        fig.update_layout(mapbox_style="open-street-map")
-        st.plotly_chart(fig)
+        fig11.update_layout(mapbox_style="open-street-map")
+        st.plotly_chart(fig11 , key="scatter_mapbox")
     else:
         st.warning("No data available")
         
     country_counts = filtered["Country"].value_counts().reset_index()
     country_counts.columns = ["Country", "Count"]
-    fig = px.bar(
+    fig12 = px.bar(
         country_counts,
         x="Country",
         y="Count",
         title="Jobs by Country"
     )
-    st.plotly_chart(fig)
+    st.plotly_chart(fig12, key="jobs_by_countries")
 
 # ===================================================
 # TASK 5
@@ -302,12 +303,12 @@ elif task == "Task 5 – India vs Germany Comparison":
     else:
         st.warning("No data available")
         
-    fig = px.pie(
+    fig13 = px.pie(
         filtered,
         names="Country",
         title="India vs Germany Share"
     )
-    st.plotly_chart(fig)
+    st.plotly_chart(fig13 ,key="india_vs_germany")
 
 # ===================================================
 # TASK 6
@@ -327,11 +328,11 @@ elif task == "Task 6 – Work Type Salary Distribution":
     else:
         st.warning("No data available")
 
-    fig = px.histogram(
+    fig14 = px.histogram(
         filtered,
         x="Salary Min",
         nbins=30,
         title="Salary Distribution"
     )
 
-    st.plotly_chart(fig)
+    st.plotly_chart(fig14 ,key="salary_by_distribution")
