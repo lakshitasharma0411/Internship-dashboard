@@ -1,15 +1,20 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import gdown
 import os
 from datetime import datetime
+import pytz
+
+def is_time_valid(start, end):
+    ist = pytz.timezone("Asia/Kolkata")
+    now = datetime.now(ist)
+    return start <= now.hour < end
 
 # ---------------------------------------------------
 # PAGE CONFIGURE
 # ---------------------------------------------------
 st.set_page_config(page_title="Global Internship Dashboard", layout="wide")
-st.title("🌍 Global Internship Dashboard")
+st.title("Global Internship Dashboard")
 
 # ---------------------------------------------------
 # LOAD DATA
@@ -17,18 +22,19 @@ st.title("🌍 Global Internship Dashboard")
 @st.cache_data
 def load_data():
     try:
+        # ✅ Load small dataset (GitHub)
         df = pd.read_csv("dataset.csv")
-        st.sidebar.success("Loaded GitHub dataset")
+        st.sidebar.success("Loaded GitHub dataset (fast)")
+
     except:
+        # ✅ Fallback to Google Drive
         file_id = "1gvHGeckF5hqT3LFpvGLT3HaB7penAxUA"
-        url = f"https://drive.google.com/uc?id={file_id}"
+        url = f"https://drive.google.com/uc?id=1gvHGeckF5hqT3LFpvGLT3HaB7penAxUA"
         output = "data.csv"
 
         if not os.path.exists(output):
-            with st.spinner("Downloading dataset..."):
-                gdown.download(url, output, quiet=False)
-
-        df = pd.read_csv(output, nrows=50000)
+            with st.spinner("Downloading dataset from Google Drive..."):
+                df = pd.read_csv("https://drive.google.com/uc?id=1gvHGeckF5hqT3LFpvGLT3HaB7penAxUA")
         st.sidebar.warning("Loaded Drive dataset")
 
     # CLEANING
@@ -130,17 +136,27 @@ def apply_filters(data):
 # TASK 1
 # ===================================================
 if task == "Task 1 – Preference vs Work Type":
+    # Apply strict rules
+    filtered = df[
+        (df["Work Type"] == "intern") &
+        (df["latitude"] < 10) &
+        (~df["Country"].str.startswith(('A', 'B', 'C', 'D'), na=False)) &
+        (df["Salary Min"] > 9) & # Assuming units are in thousands
+        (df["Experience Num"] % 2 == 0) &
+        (df["Job Posting Date"].dt.month % 2 != 0)
+    ]
+    
+    # Requirement: Single word title, < 10 chars
+    filtered = filtered[filtered["Job Title"].str.split().str.len() == 1]
+    filtered = filtered[filtered["Job Title"].str.len() < 10]
 
-    filtered = apply_filters(df)
-
-    filtered = filtered[filtered["Work Type"] == "intern"]
-    filtered = filtered[filtered["Salary Min"] > 5]
-
-    st.write("Filtered Rows:", len(filtered))
-
+    # Requirement: Sort Descending
     grouped = filtered.groupby("Preference").size().reset_index(name="Count")
+    grouped = grouped.sort_values(by="Count", ascending=False)
+    
+    st.write(f"Filtered Rows: {len(filtered)}")
     fig1 = px.bar(grouped, x="Preference", y="Count", text="Count")
-    st.plotly_chart(fig1, key="t1_bar")
+    st.plotly_chart(fig1)
 
     fig2 = px.pie(df, names="Work Type")
     st.plotly_chart(fig2, key="t1_pie")
@@ -148,6 +164,13 @@ if task == "Task 1 – Preference vs Work Type":
     fig3 = px.bar(df["Country"].value_counts().head(10).reset_index(),
                   x="Country", y="count")
     st.plotly_chart(fig3, key="t1_country")
+
+    if is_time_valid(15, 17):
+        st.plotly_chart(fig1)
+        st.plotly_chart(fig2)
+        st.plotly_chart(fig3)
+    else:
+        st.warning("Visible only between 3 PM and 5 PM IST")
 
 # ===================================================
 # TASK 2
@@ -170,21 +193,42 @@ elif task == "Task 2 – Company Size vs Company Name":
     fig2 = px.bar(top, x="Company", y="Company Size")
     st.plotly_chart(fig2, key="t2_bar")
 
+    if is_time_valid(15, 17):
+        st.plotly_chart(fig)
+        st.plotly_chart(fig2)
+        
+    else:
+        st.warning("Visible only between 3 PM and 5 PM IST")
+
 # ===================================================
 # TASK 3
 # ===================================================
 elif task == "Task 3 – Top 10 Companies":
+    # Complex Filter: Exclude Asia and countries starting with 'C'
+    # Note: You'll need a list of Asian countries or a 'Continent' column
+    filtered = df[
+        (df["Job Title"] == "Data Scientist") &
+        (df["latitude"] < 10) &
+        (~df["Country"].str.startswith('C', na=False)) &
+        (df["Qualification"] == "B.Tech") &
+        (df["Company Size"] >= 10000)
+    ]
+    
+    top10 = filtered["Company"].value_counts().head(10).reset_index()
+    top10.columns = ["Company", "Count"]
 
-    filtered = apply_filters(df)
+    fig = px.treemap(top10, path=["Company"], values="Count")
+    st.plotly_chart(fig)
 
-    top = filtered["Company"].value_counts().head(10).reset_index()
-    top.columns = ["Company", "Count"]
-
-    fig1 = px.treemap(top, path=["Company"], values="Count")
-    st.plotly_chart(fig1, key="t3_tree")
-
-    fig2 = px.pie(top, names="Company", values="Count")
+    fig2 = px.pie(top10 , names="Company", values="Count")
     st.plotly_chart(fig2, key="t3_pie")
+
+    if is_time_valid(15, 17):
+        st.plotly_chart(fig)
+        st.plotly_chart(fig2)
+        
+    else:
+        st.warning("Visible only between 3 PM and 5 PM IST")
 
 # ===================================================
 # TASK 4
@@ -205,21 +249,53 @@ elif task == "Task 4 – Qualification Map":
     fig.update_layout(mapbox_style="open-street-map")
     st.plotly_chart(fig, key="t4_map")
 
+    if is_time_valid(15, 18):
+        st.plotly_chart(fig)
+    else:
+        st.warning("Visible only between 3 PM and 6 PM IST")
+
 # ===================================================
 # TASK 5
 # ===================================================
+# ===================================================
+# TASK 5 – India vs Germany Comparison
+# ===================================================
 elif task == "Task 5 – India vs Germany Comparison":
+    # 1. Start with the "Strict" list
+    allowed_titles = ["Data Scientist", "Art Teacher", "Aerospace Engineer"]
+    
+    strict_filtered = df[
+        (df["Country"].isin(["India", "Germany"])) &
+        (df["Qualification"] == "B.Tech") &
+        (df["Job Title"].isin(allowed_titles))
+    ]
 
-    filtered = apply_filters(df)
-    filtered = filtered[filtered["Country"].isin(["India", "Germany"])]
+    # Check if we have data. If not, widen the search slightly to show the chart
+    if len(strict_filtered) == 0:
+        st.warning("⚠️ No data matches the strict 'B.Tech + Specific Title' criteria. Showing all India vs Germany postings for visualization.")
+        display_df = df[df["Country"].isin(["India", "Germany"])]
+    else:
+        display_df = strict_filtered
 
-    grouped = filtered.groupby(["Country", "Job Title"]).size().reset_index(name="Count")
+    # Requirement: India in Orange, Germany in Green
+    # We use 'color' on Country to ensure the specific mapping works
+    fig = px.bar(
+        display_df.groupby(["Country", "Job Title"]).size().reset_index(name="Count"),
+        x="Country", 
+        y="Count", 
+        color="Country", 
+        barmode="stack",
+        color_discrete_map={"India": "orange", "Germany": "green"},
+        title="India (Orange) vs Germany (Green) Comparison"
+    )
+    st.plotly_chart(fig, key="t5_fixed")
 
-    fig = px.bar(grouped, x="Country", y="Count", color="Job Title", barmode="stack")
-    st.plotly_chart(fig, key="t5_bar")
+    if is_time_valid(15, 17):
+        st.plotly_chart(fig)
+        
+    else:
+        st.warning("Visible only between 3 PM and 5 PM IST")
 
-    fig2 = px.pie(filtered, names="Country")
-    st.plotly_chart(fig2, key="t5_pie")
 
 # ===================================================
 # TASK 6
@@ -234,3 +310,10 @@ elif task == "Task 6 – Work Type Salary Distribution":
 
     fig2 = px.histogram(filtered, x="Salary Min")
     st.plotly_chart(fig2, key="t6_hist")
+
+    if is_time_valid(15, 17):
+        st.plotly_chart(fig)
+        st.plotly_chart(fig2)
+        
+    else:
+        st.warning("Visible only between 3 PM and 5 PM IST")
