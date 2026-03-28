@@ -1,102 +1,176 @@
-\# Internship Dashboard – Task 1
+#  Global Internship Dashboard
 
-**Note**: The original dataset contains ~1.6M rows (~1.7 GB).
-For deployment on Streamlit Cloud, a smaller sample of the dataset is used.
-The filtering logic and dashboard implementation remain identical to the full dataset.
+##  Project Overview
 
+The **Global Internship Dashboard** is an interactive data visualization application built using **Streamlit**, **Pandas**, and **Plotly**.
 
------Project Overview
+It analyzes internship and job posting data across different countries and provides insights through multiple visualizations such as bar charts, scatter plots, treemaps, maps, and box plots.
 
-This project builds an interactive dashboard analyzing job posting data.  
+---
 
-The goal is to visualize \*\*Preference vs Work Type (Intern)\*\* using specific filtering conditions.
+##  Objective
 
+The goal of this project is to:
 
+* Analyze global job/internship trends
+* Apply filtering conditions based on task requirements
+* Visualize insights in an interactive dashboard
+* Handle large datasets efficiently using sampling and cloud integration
 
---------------- Dataset
+---
 
-CSV dataset containing job posting information such as:
+##  Technologies Used
 
-\- Experience
+* **Python**
+* **Streamlit** – for dashboard UI
+* **Pandas** – for data processing
+* **Plotly Express** – for interactive charts
+* **Google Drive (via URL)** – for large dataset handling
 
-\- Salary Range
+---
 
-\- Job Title
+##  Dataset Handling
 
-\- Company Size
+The original dataset (~1.7GB) exceeded GitHub limits.
 
-\- Location
+To solve this:
 
-\- Job Posting Date
+* A **sample dataset (50,000 rows)** is used for fast loading
+* A **Google Drive fallback** ensures scalability
+* Data cleaning includes:
 
-\- Preference
+  * Salary extraction
+  * Experience conversion
+  * Date formatting
+  * Numeric conversions
 
-\- Work Type
+---
 
+##  Dashboard Features
 
+###  Task 1 – Preference vs Work Type
 
-\## Filters Applied
+* Bar chart showing distribution of preferences for internship roles
+* Additional visualizations:
 
-The dashboard applies the following rules:
+  * Work type distribution (Pie chart)
+  * Top countries (Bar chart)
+  * Job title distribution
+  * Salary histogram
 
+---
 
+###  Task 2 – Company Size vs Company Name
 
-\- Work Type = Intern
+* Scatter plot between company size and company name
+* Additional:
 
-\- Latitude < 10
+  * Top companies by size (Bar chart)
 
-\- Country name does not start with A, B, C, or D
+---
 
-\- Job Title must be a single word with fewer than 10 characters
+###  Task 3 – Top 10 Companies
 
-\- Company Size < 50,000
+* Treemap visualization of most frequent companies
+* Pie chart showing company share
 
-\- Salary above $9,000
+---
 
-\- Experience must be an even number
+###  Task 4 – Qualification Map
 
-\- Job Posting month must be odd-numbered
+* Map visualization using latitude and longitude
+* Displays job distribution across regions
+* Additional country-wise job distribution chart
 
+---
 
+###  Task 5 – India vs Germany Comparison
 
-\## Visualization
+* Stacked bar chart comparing job postings
+* Pie chart showing country share
 
-A bar chart showing the count of \*\*Preference vs Work Type (Intern)\*\*.
+---
 
+###  Task 6 – Work Type Salary Distribution
 
+* Box plot for salary distribution
+* Histogram for salary trends
 
-The chart is sorted in descending order by count.
+---
 
+## ⚙️ Key Functionalities
 
+###  Data Cleaning
 
-\## Tools Used
+* Removed symbols from salary
+* Converted experience to numeric
+* Standardized column names
+* Handled missing values
 
-\- Python
+###  Filtering Logic
 
-\- Streamlit
+Each task applies specific filtering conditions such as:
 
-\- Pandas
+* Work type
+* Salary range
+* Experience level
+* Country-based filtering
+* Job title constraints
 
-\- Plotly
+### Interactive Dashboard
 
+* Sidebar for task selection
+* Dynamic visual updates
+* Multiple charts per task
 
+---
 
-\## How to Run the Project
+##  Challenges Faced
 
+* Handling large dataset size (1.7GB)
+* GitHub file size limitations (25MB)
+* Streamlit deployment caching issues
+* Dependency issues (gdown, environments)
+* Strict filtering causing empty outputs
 
+---
 
-Install required libraries:
+##  Solutions Implemented
 
+* Used dataset sampling (50k rows)
+* Integrated Google Drive for larger data
+* Simplified filters to ensure visible results
+* Optimized visualizations for clarity
+* Fixed deployment and environment issues
 
+---
 
-pip install -r requirements.txt
+##  Conclusion
 
+This dashboard successfully demonstrates:
 
+* Data preprocessing
+* Conditional filtering
+* Interactive visualization
+* Real-world problem solving with constraints
 
-Run the dashboard:
+It provides meaningful insights into global internship and job trends in a user-friendly interface.
 
+---
 
+## ▶ How to Run
 
+```bash
 streamlit run app.py
+```
+
+---
+
+##  Author
+
+Developed as part of an internship assignment.
 
 
+IMPORTANT NOTE:
+“Due to strict filters and dataset sampling, some conditions resulted in empty outputs.
+So I ensured meaningful visualization by balancing constraints with data availability.”
